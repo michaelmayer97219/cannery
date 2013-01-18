@@ -55,38 +55,34 @@
 		$(this).css("background-color", culur)
 	});
 
-	//File picker adder function
-	var y = 0;
 	$('#filePicker').live('change', function(e){
 
 		//hide initial screen
 		$('.fun').hide()
 		$('body').css('background-color','#fcfcfc')
-		//create text background
-	//	$('.canned').css('background-color',doubleHighCulur)
-		//create left border
-	//	$('.canned').css('border-left','6px solid '+culur)
-		//define files
-		var o = 0
-  		var fileList = e.target.files;
-  		names = []
-  		 for (var i=0, f; f=fileList[i]; i++) {
-  		 	names.push(name = fileList[i].name.slice(0,-4))
-  		 	var y = 0
-  		 	
-  			var reader = new FileReader;
-  			
-  			reader.onloadend =  function(event) {
-  				alert(event.total)
-  				o = o +1
 
-  				var length = fileList.length
-  				var text = event.target.result;
-  				text = text.replace(/\n\r?/g, '<br />');
-  				var texts = [];
-  				texts.push(text);
-			   	$('.canned').append('<div class="wrapper"><div class="title">'+names[y]+'</div><div class="content">'+text+'</div></div>');
-			 // $('.content').hide();
+	/*	reader.onloadend =  function(event) {
+  				
+  				
+  				
+
+		 		
+ 				}
+	*/
+
+	function runReader(file) {
+		var rawName = file.name;
+		var nameArray = rawName.split('.')
+		var name = nameArray[0]
+		var extension = nameArray[1]
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			var text = e.target.result;
+			text = text.replace(/\n\r?/g, '<br />');
+
+  			if (extension == 'txt') {
+			   	$('.canned').append('<div class="wrapper"><div class="title">'+name+'</div><div class="content">'+text+'</div></div>');
+			    $('.content').hide();
 			 	$('.title').parent().css("border-bottom", '1px solid '+borderCulur)
 			 	$('.title').parent().css("border-left", '1px solid '+borderCulur)
 			 	$('.title').css("border-top", "0px solid white")
@@ -97,12 +93,23 @@
 			 	$('.title').mouseout(function(){
 			 		$(this).parent().css("border-left", '0px solid black')
 			 	});
+			 } else {
+			 	alert('Skipped file: '+name+' because it does not appear to be a text file')
+			 }
 
-		 		y = y+1
- 				}
-		reader.readAsText(fileList[i]);	
+		}
+		reader.readAsText(file, "UTF-8");
+	}
 
-  		}
+
+  		var fileList = e.target.files;
+  		for (var i = 0; i < fileList.length; i ++) 
+  			{ 
+
+  			
+  				runReader(fileList[i]); 
+
+  			}
 
  	$(this).hide() //hide file picker
   	});
