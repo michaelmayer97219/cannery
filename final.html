@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canned Text</title>
+	<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" defer="defer">
+
+	$(document).ready(function(){
+
+	$(window).mouseover(function() {
+		$(this).focus();
+
+	});	
+
+
+
+	//generate random numbers
+
+	var r4 = Math.floor((Math.random()*100)+130);
+	var r5 = Math.floor((Math.random()*100)+130);
+	var r6 = Math.floor((Math.random()*100)+130);
+	
+	//create rbg colors
+	var culur = 'rgb('+r4+','+r5+','+r6+')'
+	var highCulur = 'rgb('+(r4-8)+','+(r5-8)+','+(r6-8)+')'
+	var clickCulur = 'rgb('+(r4-15)+','+(r5-15)+','+(r6-15)+')'
+	var doubleHighCulur = 'rgb('+Math.floor((r4+1275)/6)+','+Math.floor((r5+1275)/6)+','+Math.floor((r6+1275)/6)+')'
+	var borderCulur = 'rgb('+Math.floor((r4+255)/2)+','+Math.floor((r5+255)/2)+','+Math.floor((r6+255)/2)+')'
+
+
+	
+
+	$('#changer').live('click', function() {
+		culur = '#ace'
+		alert('yo')
+	});
+
+	//random color showcase
+	$('body').css('background-color',culur)
+	$("#filePicker").css('background-color',culur)
+	$('body').append('<div class="fun">Random Color:</div>')
+	$('body').append('<div class="fun">RED: '+r4+'</div>')
+	$('body').append('<div class="fun">GREEN: '+r5+'</div>')
+	$('body').append('<div class="fun">BLUE: '+r6+'</div>')
+
+	
+	
+	//title highlights
+	$('.title').mouseover(function(){
+		$(this).css("background-color", highCulur)
+		$(this).css("cursor", "pointer")
+	});
+
+	$('.title').mouseout(function(){
+		$(this).css("background-color", culur)
+	});
+
+	//File picker adder function
+	var y = 0;
+	$('#filePicker').live('change', function(e){
+
+		//hide initial screen
+		$('.fun').hide()
+		$('body').css('background-color','#fcfcfc')
+		//create text background
+	//	$('.canned').css('background-color',doubleHighCulur)
+		//create left border
+	//	$('.canned').css('border-left','6px solid '+culur)
+		//define files
+		var o = 0
+  		var fileList = e.target.files;
+  		names = []
+  		 for (var i=0, f; f=fileList[i]; i++) {
+  		 	names.push(name = fileList[i].name.slice(0,-4))
+  		 	var y = 0
+  		 	
+  			var reader = new FileReader;
+  			
+  			reader.onloadend =  function(event) {
+  				alert(event.total)
+  				o = o +1
+
+  				var length = fileList.length
+  				var text = event.target.result;
+  				text = text.replace(/\n\r?/g, '<br />');
+  				var texts = [];
+  				texts.push(text);
+			   	$('.canned').append('<div class="wrapper"><div class="title">'+names[y]+'</div><div class="content">'+text+'</div></div>');
+			 // $('.content').hide();
+			 	$('.title').parent().css("border-bottom", '1px solid '+borderCulur)
+			 	$('.title').parent().css("border-left", '1px solid '+borderCulur)
+			 	$('.title').css("border-top", "0px solid white")
+			 	$('.title').mouseover(function(){
+			 		$(this).parent().css("border-left", '5px solid '+ highCulur)
+					$(this).css("cursor", "pointer")
+			 	});
+			 	$('.title').mouseout(function(){
+			 		$(this).parent().css("border-left", '0px solid black')
+			 	});
+
+		 		y = y+1
+ 				}
+		reader.readAsText(fileList[i]);	
+
+  		}
+
+ 	$(this).hide() //hide file picker
+  	});
+
+		//click action
+
+		var x = 0;
+
+  		$('.title').live('click', function(){
+			$(this).each(function(){
+
+				var v = $(this).siblings().css('display')
+				
+ 					if (v == 'none') {
+					$(this).siblings().show(100);
+					$(this).css('background-color', doubleHighCulur) 
+					$(this).parent().css('border-left','5px solid '+clickCulur)
+					$(this).mouseout(function() {
+						$(this).parent().css('border-left','5px solid '+clickCulur)
+						
+					});
+
+				//	$(this).css("background-color", doubleHighCulur)
+				//	$('.canned').css('border-left','6px solid '+clickCulur)
+				//	$(this).mouseout(function() {
+				//		$(this).css("background-color", clickCulur)
+				//	});
+ 				
+					
+							}
+					else {
+ 						$(this).siblings().hide(100);
+ 						$(this).parent().css('border-left','0px solid black')
+ 						$(this).mouseout(function() {
+ 							
+							$(this).parent().css('border-left','0px solid '+clickCulur)
+						
+						});
+						$(this).parent().css('border-left','0px solid '+clickCulur)
+ 						$(this).css('background-color', "#fcfcfc")
+ 						}	
+
+ 			});	
+ 		}); 
+
+	
+});
+
+	</script>
+	<style type="text/css">
+
+	html {
+	width: 100%;
+	height: 100%;
+
+}
+
+.fun {
+	color: white;
+	font-family: monospace;
+	padding-top: 10px;
+	padding-left: 5%;
+	font-size: 20px;
+}
+
+body {
+	background-color: #fefefe;
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	padding-top: 5px;
+	margin: 0px;
+}
+
+#container {
+	width: 265px;
+	margin-left: 5px;
+	
+}
+
+.title {
+	width:255px;
+	xbackground-color: #eef;
+	border-top: 2px solid #fbfbfb;
+	xpadding:5px;
+	padding-left: 5px;
+	padding-top: 10px;
+	padding-right: 0px;
+	font-family: calibri;
+	font-size: 19px;
+	color:#333;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.content {
+	width: 220px;
+	padding:12px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-right: 40px;
+	border-top:2px solid white;
+	font-family: calibri;
+	font-size: 16px;
+	color: #555;
+}
+
+	</style>
+
+</head>
+<body>
+	<div id="container">
+		<div class="canned">	
+		</div>		
+		<input type="file" id="filePicker" multiple></input>
+			<button id="changer">clr chge</button>
+	</div>
+</br>
+</br>
+</br>
+</br>
+</br>
+</body>
+</html>
