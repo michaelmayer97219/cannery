@@ -7,6 +7,14 @@
 
 	$(document).ready(function(){
 
+		$("#fileSelect").click(function() {
+			$('#filePicker').click();
+		});
+
+	$('.buttons').mouseover(function(){
+		$(this).css("cursor", "pointer")
+	});
+
 	//generate random numbers
 	function colorGen() {
 	r4 = Math.floor((Math.random()*150)+90);
@@ -19,6 +27,10 @@
 	clickCulur = 'rgb('+(r4-15)+','+(r5-15)+','+(r6-15)+')'
 	doubleHighCulur = 'rgb('+Math.floor((r4+1275)/6)+','+Math.floor((r5+1275)/6)+','+Math.floor((r6+1275)/6)+')'
 	borderCulur = 'rgb('+Math.floor((r4+255)/2)+','+Math.floor((r5+255)/2)+','+Math.floor((r6+255)/2)+')'
+
+	if (r4+r5+r6 > 450) {
+		colorGen()
+	}
 
 }
 
@@ -33,11 +45,14 @@ colorGen();
 
 	function showColor() {
 	//random color showcase
-	$('body').css('background-color',culur)
-	$("#filePicker").css('background-color',culur)
+	$('.buttons').css('background-color',culur)
+	$('#funs').css('border-top', '10px solid '+culur)
+	$('#funs').css('border-bottom', '10px solid '+culur)
+	$('#funs').css('background-color', doubleHighCulur)
 	$('#red').html(r4)
 	$('#green').html(r5)
 	$('#blue').html(r6)
+
 }
 
 showColor();
@@ -55,10 +70,12 @@ showColor();
 
 	var loadCounter = 0;
 	var contents = [];
+
+
 	$('#filePicker').live('change', function(e){
 
 		//hide initial screen
-		$('.fun').hide()
+		$('#funs').hide()
 		$('body').css('background-color','#fcfcfc')
 
 	function runReader(file) {
@@ -113,8 +130,8 @@ showColor();
   				runReader(fileList[i]); 
   			}
 
- 	$(this).hide() //hide file picker
- 	$('button').hide()
+ 	$("#fileSelect").hide() //hide file picker
+ 	$('#colorChange').hide()
   	});
 
 		//append things to thing
@@ -167,7 +184,7 @@ showColor();
 						
 						});
 						$(this).parent().css('border-left','0px solid '+clickCulur)
- 						$(this).css('background-color', "#fcfcfc")
+ 						$(this).css('background-color', "white")
  						$(this).css('color', '#333') 
  						}	
 
@@ -193,7 +210,7 @@ showColor();
 }
 
 .fun {
-	color: white;
+	color: #333;
 	font-family: monospace;
 	padding-top: 10px;
 	padding-left: 5%;
@@ -245,6 +262,35 @@ body {
 	xbackground-color: #f8f8f8;
 }
 
+#filePicker {
+	display:none;
+}
+
+.buttons {
+	width:255px;
+	xbackground-color: #eef;
+	border-top: 2px solid #fbfbfb;
+	xpadding:5px;
+	padding-left: 10px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	padding-right: 0px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 17px;
+	color:#333;
+	user-select: none;
+	-webkit-user-select: none;
+	color: #fcfcfc;
+	border-radius: 5px;
+
+}
+
+#funs {
+	margin-top: 175px;
+	padding-bottom: 10px;
+	border-radius: 10px;
+}
+
 	</style>
 
 </head>
@@ -253,11 +299,14 @@ body {
 		<div class="canned">	
 		</div>		
 		<input type="file" id="filePicker" multiple></input>
-		<button id="colorChange">Change Random Color</button>
-		<div class="fun">Random Color: </div>
-	<div class="fun" >RED: <span id="red"></span></div>
-	<div class="fun" >GREEN: <span id="green"></span></div>
-	<div class="fun" >BLUE: <span id="blue"></span></div>
+		<div id="fileSelect" class="buttons">Pick Files</div>
+		<div id="colorChange" class="buttons">Change Random Color</div>
+		<div id="funs">
+			<div class="fun">Random Color: </div>
+			<div class="fun" >RED: <span id="red"></span></div>
+			<div class="fun" >GREEN: <span id="green"></span></div>
+			<div class="fun" >BLUE: <span id="blue"></span></div>
+		</div>
 
 	</div>
 </br>
