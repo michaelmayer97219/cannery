@@ -13,6 +13,13 @@
 
 	$('.buttons').mouseover(function(){
 		$(this).css("cursor", "pointer")
+		$(this).css('padding-left', '20px')
+		$(this).css('width', '245px')
+	});
+
+	$('.buttons').mouseout(function(){
+		$(this).css('padding-left', '10px')
+		$(this).css('width', '255px')
 	});
 
 	//generate random numbers
@@ -229,13 +236,16 @@ body {
 #container {
 	width: 265px;
 	margin-left: 5px;
+	border-top: 2px solid #fbfbfb;
+	padding: 1px;
+	margin-right: 100px;
 	
 }
 
 .title {
-	width:255px;
+	width:250px;
 	xbackground-color: #eef;
-	border-top: 2px solid #fbfbfb;
+	xborder-top: 2px solid #fbfbfb;
 	xpadding:5px;
 	padding-left: 10px;
 	padding-top: 8px;
@@ -269,7 +279,8 @@ body {
 .buttons {
 	width:255px;
 	xbackground-color: #eef;
-	border-top: 2px solid #fbfbfb;
+	xborder-top: 2px solid #fbfbfb;
+	margin-top: 2px;
 	xpadding:5px;
 	padding-left: 10px;
 	padding-top: 8px;
